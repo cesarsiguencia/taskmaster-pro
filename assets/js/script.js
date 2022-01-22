@@ -1,7 +1,8 @@
-var tasks = {};
+var tasks = {}; // USED FOR LOCAL STORAGE BELOW
 
 var createTask = function(taskText, taskDate, taskList) {
-  // create elements that make up a task item
+
+  // create elements that make up a task item under TO DO
   var taskLi = $("<li>").addClass("list-group-item");
   var taskSpan = $("<span>")
     .addClass("badge badge-primary badge-pill")
@@ -10,7 +11,7 @@ var createTask = function(taskText, taskDate, taskList) {
     .addClass("m-1")
     .text(taskText);
 
-  // append span and p element to parent li
+  // append span and p element to the new parent LI
   taskLi.append(taskSpan, taskP);
 
 
@@ -83,38 +84,45 @@ $("#task-form-modal .btn-primary").click(function() {
 });
 
 
-//I WROTE THIS
-// $(".list-group").on("click", "p", function(){
-//   console.log(this);
-// });
 
+// CHANGING THE TEXT IN THE LIST
 
-
+// when "p" is clicked, select the "list-group" through event delegation
 $(".list-group").on("click", "p", function() {
 
-  // get the textarea's current value/text
+  // get the textarea's current value/text, then trim the result if there are spaces with trim
   var text = $(this)
     .text()
     .trim();
 
+  // creating a new dynamic element when button is pressed, jquery element created when $("<textarea>"), use the less and greater than signs
   var textInput = $("<textarea>")
   .addClass("form-control")
   .val(text);
 
+  // replacing original "p" with "textInput"
   $(this).replaceWith(textInput);
+  // the following highlights what is being edited
   textInput.trigger("focus");
+});
 
+// SAVING NEW EDIT TO THE LIST
+
+  // the following will make sure our work is saveed after interacting this the above
   $(".list-group").on("blur","textarea",function(){
     // get the textarea's current value/text
         var text = $(this)
         .val()
         .trim();
 
-        // get the parent ul's id attribute
+        // get the parent ul's id attribute,by class
         var status = $(this)
         .closest(".list-group")
+        // grabbing ID to modify 
         .attr("id")
-        .replace("list-", "");
+        // replacing ID with new wording
+        .replace("list-", ""); //now the ID is toDo for the UL instead of list-toDO
+        //we are doing this to update the new data everytime it's clicked
 
         // get the task's position in the list of other li elements
         var index = $(this)
@@ -131,8 +139,8 @@ $(".list-group").on("click", "p", function() {
 
         // replace textarea with p element
         $(this).replaceWith(taskP);
-          })
-});
+  })
+
 
 // due date was clicked
 $(".list-group").on("click", "span", function() {
