@@ -28,6 +28,7 @@ var auditTask = function(taskEl){
     $(taskEl).addClass("list-group-item-danger");
 
   }
+  // using abs difference to get two days from now
   else if(Math.abs(moment().diff(time, "days")) <= 2 )
     // adding bootstrap class for elements 2 days will be due
     $(taskEl).addClass("list-group-item-warning");
@@ -363,4 +364,11 @@ $("#trash").droppable({
 $("#modalDueDate").datepicker({
   minDate: 1 // this prevents the user from selecting dates that were yesterday
 });
+
+setInterval(function(){
+  $(".card .list-group-item").each(function(index,el){
+    //passing the function every 30 mins
+    auditTask(el)
+  })
+},1800000);
 
