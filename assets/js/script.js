@@ -1,6 +1,6 @@
 // UPDATE SAVE TASKS();
 
-var tasks = {}; // USED FOR LOCAL STORAGE BELOW
+var jQueryTasks = {}; // USED FOR LOCAL STORAGE BELOW
 
 var auditTask = function(taskEl){
   // to ensure element is getting to the function
@@ -57,12 +57,12 @@ var createTask = function(taskText, taskDate, taskList) {
 };
 
 var loadTasks = function() {
-  tasks = JSON.parse(localStorage.getItem("tasks"));
+  jQueryTasks = JSON.parse(localStorage.getItem("jQueryTasks"));
 
   // if nothing in localStorage, create a new object to track all task status arrays
-  if (!tasks) {
+  if (!jQueryTasks) {
     console.log("there are no tasks")
-    tasks = {
+    jQueryTasks = {
       toDo: [],
       inProgress: [],
       inReview: [],
@@ -72,7 +72,7 @@ var loadTasks = function() {
   }
 
   // loop over object properties
-  $.each(tasks, function(list, arr) {
+  $.each(jQueryTasks, function(list, arr) {
     console.log(list, arr);
     // then loop over sub-array
     arr.forEach(function(task) {
@@ -82,7 +82,7 @@ var loadTasks = function() {
 };
 
 var saveTasks = function() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("jQueryTasks", JSON.stringify(jQueryTasks));
 };
 
 
@@ -113,7 +113,7 @@ $("#task-form-modal .btn-primary").click(function() {
     $("#task-form-modal").modal("hide");
 
     // save in tasks array
-    tasks.toDo.push({
+    jQueryTasks.toDo.push({
       text: taskText,
       date: taskDate
     });
@@ -169,10 +169,10 @@ $(".list-group").on("blur","textarea", function(){
   console.log(status);
   console.log(index);
   console.log(text);
-  console.log(tasks);
+  console.log(jQueryTasks);
 
-  console.log(tasks[status][index])
-  tasks[status][index].text = text;
+  console.log(jQueryTasks[status][index])
+  jQueryTasks[status][index].text = text;
   saveTasks();
    //FIRST TEXT IS THE TEXT WERE ARE LOCATING FROM THE ARRAY (IT IS A PROPERTY), THE SECOND IS THE TEXT WE CREATED AS A VARIABLE AT THE TOP OF THIS FUNCTION, WE ARE EQUALING THE FIRST PART TO THE SECOND
 
@@ -237,7 +237,7 @@ $(".list-group").on("change", "input[type='text']", function() {
     .index();
 
   //update tast in array and re-save to local storage
-  tasks[status][index].date=date;
+  jQueryTasks[status][index].date=date;
   saveTasks();
 
   //recreate spam element with Bootstrap classes
@@ -256,8 +256,8 @@ $(".list-group").on("change", "input[type='text']", function() {
 
 // remove all tasks
 $("#remove-tasks").on("click", function() {
-  for (var key in tasks) {
-    tasks[key].length = 0;
+  for (var key in jQueryTasks) {
+    jQueryTasks[key].length = 0;
     $("#list-" + key).empty();
   }
   saveTasks();
@@ -337,7 +337,7 @@ $(".card .list-group").sortable({
       .replace("list-","");
 
     //update array on tasks object and save
-    tasks[arrName] = tempArr;
+    jQueryTasks[arrName] = tempArr;
     saveTasks();
     
   }
