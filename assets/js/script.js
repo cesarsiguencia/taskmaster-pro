@@ -59,6 +59,8 @@ var createTask = function(taskText, taskDate, taskList) {
 var loadTasks = function() {
   jQueryTasks = JSON.parse(localStorage.getItem("jQueryTasks"));
 
+  console.log("loadTasks is working")
+
   // if nothing in localStorage, create a new object to track all task status arrays
   if (!jQueryTasks) {
     console.log("there are no tasks")
@@ -70,6 +72,8 @@ var loadTasks = function() {
     };
     return;
   }
+
+  console.log("past the if statement")
 
   // loop over object properties
   $.each(jQueryTasks, function(list, arr) {
