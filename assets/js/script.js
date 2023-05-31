@@ -67,6 +67,7 @@ var loadTasks = function() {
       inReview: [],
       done: []
     };
+    return;
   }
 
   // loop over object properties
