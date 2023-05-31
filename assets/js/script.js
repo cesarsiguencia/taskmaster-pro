@@ -61,6 +61,7 @@ var loadTasks = function() {
 
   // if nothing in localStorage, create a new object to track all task status arrays
   if (!tasks) {
+    console.log("there are no tasks")
     tasks = {
       toDo: [],
       inProgress: [],
